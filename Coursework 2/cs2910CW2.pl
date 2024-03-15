@@ -16,15 +16,14 @@ adjacent_to(R1, R2) :- leads_to(R1, R2); leads_to(R2, R1).
 % 3.1 Find a path
 
 find_paths(Start, _, _) :-
-    \+ adjacent_to(Start, _),
-    write("Invalid start room given for first argument."), !.
+    \+ adjacent_to(Start, _), !,
+    write("Invalid start room given for first argument.").
 find_paths(_, Goal, _) :-
-    \+ adjacent_to(Goal, _),
-    write("Invalid goal room given for second argument."), !.
+    \+ adjacent_to(Goal, _), !,
+    write("Invalid goal room given for second argument.").
 find_paths(_, _, Solution) :-
-    \+ is_list(Solution);
-    \+ var(Solution),
-    write("Third predicate argument must be list or variable."), !.
+    \+ var(Solution), !,
+    write("Third predicate argument must be a variable.").
 find_paths(Start, Goal, Solution) :-
     df_search(Goal, [], Start, X),
     reverse(X, Solution, []).
